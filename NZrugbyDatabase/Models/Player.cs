@@ -22,7 +22,7 @@ namespace NZrugbyDatabase.Models
 
         public string Contact { get; set; }
 
-        public int TeamID { get; set; }
+        public int TeamID { get; set; }      
 
         public Team Team { get; set; }
     }

@@ -6,11 +6,19 @@
 
 <h1>Player List</h1>
 
-<h3>This is my collection of all rugby union players from New Zealand</h3>
+<h3>This is a collection of some rugby union players from New Zealand</h3>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Players" asp-action="Index">
+    <p>
+        Player <input type="text" name="searchTerm" />
+        @*<input type="submit" value="Search"/>*@
+        <button type="submit" Team="btn btn-Team">Search</button>
+    </p>
+</form>
 
 <table class="table">
     <thead>

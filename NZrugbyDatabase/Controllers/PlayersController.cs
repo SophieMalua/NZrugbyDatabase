@@ -33,8 +33,7 @@ namespace NZrugbyDatabase.Controllers
             }
             return View(await Player.ToListAsync());
         } 
-         
-
+        
         // GET: Players/Details/5
         public async Task<IActionResult> Details(int? id)
         {

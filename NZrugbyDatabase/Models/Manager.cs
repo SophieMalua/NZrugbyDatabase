@@ -12,7 +12,8 @@ namespace NZrugbyDatabase.Models
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Display(Name = "First Name")]
+
+        [Display(Name = "First Name")] 
         public string FirstName { get; set; }
 
         [DataType(DataType.Date)]
@@ -23,5 +24,10 @@ namespace NZrugbyDatabase.Models
         public int TeamID { get; set; }
 
         public Team Team { get; set; }
+
+        internal static Task<object> ToListAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

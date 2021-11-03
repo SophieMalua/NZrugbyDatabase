@@ -20,10 +20,16 @@ namespace NZrugbyDatabase.Controllers
         }
 
         // GET: Managers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var applicationDbContext = _context.Manager.Include(m => m.Team);
-            return View(await applicationDbContext.ToListAsync());
+            var manager = from s in _context.Manager
+                           select s;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                manager = manager.Where(s => s.FirstName.Contains(searchTerm));
+            }
+            return View(await manager.ToListAsync());
         }
 
         // GET: Managers/Details/5

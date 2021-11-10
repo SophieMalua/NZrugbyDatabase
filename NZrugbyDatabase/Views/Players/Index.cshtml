@@ -1,25 +1,14 @@
 ﻿@model IEnumerable<NZrugbyDatabase.Models.Player>
 
 @{
-    ViewData["Title"] = "Players";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Player List</h1>
-
-<h3>This is a collection of some rugby union players from New Zealand</h3>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
-<form asp-controller="Players" asp-action="Index">
-    <p>
-        Player <input type="text" name="searchTerm" />
-        @*<input type="submit" value="Search"/>*@
-        <button type="submit" Team="btn btn-Team">Search</button>
-    </p>
-</form>
-
 <table class="table">
     <thead>
         <tr>
@@ -41,37 +30,36 @@
             <th>
                 @Html.DisplayNameFor(model => model.Team)
             </th>
-            <th>Action</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lastname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Firstname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DOB)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Position)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Contact)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Team)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.PlayerID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.PlayerID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.PlayerID">Delete</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Team.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PlayerID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PlayerID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PlayerID">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

@@ -24,10 +24,6 @@ namespace NZrugbyDatabase.Models
         public int TeamID { get; set; }
 
         public Team Team { get; set; }
-
-        internal static Task<object> ToListAsync()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

@@ -4,12 +4,21 @@
     ViewData["Title"] = "Players";
 }
 
-<div >
+<div>
     <h1>Player List</h1>
 
     <p>
         <a asp-action="Create">Create New</a>
     </p>
+
+    <form asp-controller="Players" asp-action="Index"> 
+    <p>
+        Player <input type="text" name="searchTerm" />
+        @*<input type="submit" value="Search"/>*@
+        <button type="submit" class="btn btn-primary">Search</button>
+    </p>
+    </form>
+
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>

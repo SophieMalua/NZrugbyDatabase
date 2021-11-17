@@ -20,13 +20,20 @@ namespace NZrugbyDatabase.Controllers
         }
 
         // GET: Managers collums
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchTerm)
         {
+            // this is just saying thatname and DOB will be put into order when you click on it
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date" + "";
          
-            var managers = from s in _context.Manager
-                           select s;
+            var managers = from m in _context.Manager
+                           select m;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                managers = managers.Where(m => m.FirstName.Contains(searchTerm) || m.LastName.Contains(searchTerm));
+                
+            }
             switch (sortOrder)
             {
                 case "name_desc":
@@ -42,26 +49,9 @@ namespace NZrugbyDatabase.Controllers
                     managers = managers.OrderBy(m => m.LastName);
                     break;
             }
-            return View(await managers.AsNoTracking().ToListAsync());
+            return View(await managers.AsNoTracking().ToListAsync());           
         }
-
-
-
-
-
-        // GET: Managers
-        public async Task<IActionResult> Manager(string searchTerm)
-        {
-            var managers = from m in _context.Manager
-                           select m;
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                managers = managers.Where(m => m.FirstName.Contains(searchTerm) || m.LastName.Contains(searchTerm));
-               
-            }
-            return View(await managers.ToListAsync());
-        }
+              
 
         // GET: Managers/Details/5
         public async Task<IActionResult> Details(int? id)

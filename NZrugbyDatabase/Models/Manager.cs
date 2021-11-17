@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NZrugbyDatabase.Models
 {
+    // this is telling you whats in the Managers folder
     public class Manager
     {
         public int ManagerID { get; set; }

@@ -19,26 +19,25 @@ namespace NZrugbyDatabase.Controllers
             _context = context;
         }
 
-        // GET: Players collums
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        // GET: Players
+        public async Task<IActionResult> Index(string sortOrder, string searchTerm)
         {
+            // this is just saying thatname and DOB will be put into order when you click on it
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "First Name" : "";
-            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date";
-            ViewData["CurrentFilter"] = searchString;
-            var players = from p in _context.Player
-                           select p;
-
-            if (!String.IsNullOrEmpty(searchString))
+            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date";          
             
-                players = players.Where(p => p.Lastname.Contains(searchString)
-                                       || p.Firstname.Contains(searchString));
-                switch (sortOrder)
+            var players = from p in _context.Player
+                          select p;
+
+            if (!string.IsNullOrEmpty(searchTerm))
             {
-                case "First_Name":
-                    players = players.OrderBy(p => p.Firstname);
-                    break;
+                players = players.Where(p => p.Firstname.Contains(searchTerm) || p.Lastname.Contains(searchTerm));
+            }
+            switch (sortOrder)
+            {
+                    
                 case "name_desc":
-                   players = players.OrderByDescending(p => p.Lastname);
+                    players = players.OrderByDescending(p => p.Lastname);
                     break;
                 case "Date":
                     players = players.OrderBy(p => p.DOB);
@@ -50,23 +49,10 @@ namespace NZrugbyDatabase.Controllers
                     players = players.OrderBy(p => p.Lastname);
                     break;
             }
+            
             return View(await players.AsNoTracking().ToListAsync());
         }
-
-
-        // GET: Players
-        public async Task<IActionResult>Players(string searchTerm)
-        {
-            var players = from p in _context.Player
-                           select p;
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-               players = players.Where(p => p.Firstname.Contains(searchTerm) || p.Lastname.Contains(searchTerm));
                
-            }
-            return View(await players.ToListAsync());
-        }
 
         // GET: Players/Details/5
         public async Task<IActionResult> Details(int? id)

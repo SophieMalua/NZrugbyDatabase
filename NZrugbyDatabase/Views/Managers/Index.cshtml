@@ -4,21 +4,23 @@
     ViewData["Title"] = "Managers";
 }
 
-<h1>Managers List</h1>
+<h1>Managers List</h1> 
 
 <p>
+    
     <a asp-action="Create">Create New</a>
 </p>
-
- <form asp-controller="Managers" asp-action="Index">
- <p>
-    Manager <input type="text" name="searchTerm" />
-    <button type="submit" class="btn btn-primary">Search</button>
-</p>
- </form>
-
+@* This part means that when you go on to the managers page it will say players Managers index*@
+<form asp-controller="Managers" asp-action="Index">
+    <p>
+        Manager <input type="text" name="searchTerm" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </p>
+</form>
+@* this means that when you hover your mouse over the coloums it darkens so you know where yor mouse is and its borded and the coloums and white and grey*@
 <table class="table table-bordered table-striped table-hover">
     <thead>
+        
         <tr>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.LastName)</a>
@@ -35,7 +37,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Team)
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>

@@ -7,21 +7,22 @@
 <div>
     <h1>Player List</h1>
 
+
     <p>
+     
         <a asp-action="Create">Create New</a>
     </p>
 
+    @* This part means that when you go on to the players page it will say players Players index*@
     <form asp-controller="Players" asp-action="Index">
         <p>
+            @* this means that its a search box and btn mean the colour of the search button *@
             Player <input type="text" name="searchTerm" />
             <button type="submit" class="btn btn-primary">Search</button>
         </p>
     </form>
-    
-            
-           
 
-
+    @* this means that when you hover your mouse over the coloums it darkens so you know where yor mouse is and its borded and the coloums and white and grey*@
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
@@ -29,19 +30,19 @@
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Lastname)</a>
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Firstname)</a>
+                    @Html.DisplayNameFor(model => model.Firstname)
                 </th>
                 <th>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.DOB)</a>
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Position)</a>
+                    @Html.DisplayNameFor(model => model.Position)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Contact)
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Team)</a>
+                    @Html.DisplayNameFor(model => model.Team)
                 </th>
                 <th></th>
             </tr>

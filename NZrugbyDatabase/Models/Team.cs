@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace NZrugbyDatabase.Models
 {
+    // This is telling you whats in the Teams folder
     public class Team
     {
         public int TeamID { get; set; }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NZrugbyDatabase.Models
 {
+    
     public class Player
     {
         public int PlayerID { get; set; }

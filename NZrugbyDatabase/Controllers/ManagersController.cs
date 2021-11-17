@@ -19,17 +19,46 @@ namespace NZrugbyDatabase.Controllers
             _context = context;
         }
 
-        // GET: Managers
+        // GET: Managers collums
+        public async Task<IActionResult> Index(string sortOrder)
+        {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+         
+            var managers = from s in _context.Manager
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    managers = managers.OrderByDescending(m => m.LastName);
+                    break;
+                case "Date":
+                    managers = managers.OrderBy(m => m.DOB);
+                    break;
+                case "date_desc":
+                    managers = managers.OrderByDescending(m => m.DOB);
+                    break;
+                default:
+                    managers = managers.OrderBy(m => m.LastName);
+                    break;
+            }
+            return View(await managers.AsNoTracking().ToListAsync());
+        }
 
-        // GET: Students
-        public async Task<IActionResult> Index(string searchTerm)
+
+
+
+
+        // GET: Managers
+        public async Task<IActionResult> Manager(string searchTerm)
         {
             var managers = from m in _context.Manager
                            select m;
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                managers = managers.Where(m => m.FirstName.Contains(searchTerm));
+                managers = managers.Where(m => m.FirstName.Contains(searchTerm) || m.LastName.Contains(searchTerm));
+               
             }
             return View(await managers.ToListAsync());
         }

@@ -19,17 +19,51 @@ namespace NZrugbyDatabase.Controllers
             _context = context;
         }
 
-        // GET: Players
+        // GET: Players collums
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "First Name" : "";
+            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+            var players = from p in _context.Player
+                           select p;
 
-        // GET: Students
-        public async Task<IActionResult> Index(string searchTerm)
+            if (!String.IsNullOrEmpty(searchString))
+            
+                players = players.Where(p => p.Lastname.Contains(searchString)
+                                       || p.Firstname.Contains(searchString));
+                switch (sortOrder)
+            {
+                case "First_Name":
+                    players = players.OrderBy(p => p.Firstname);
+                    break;
+                case "name_desc":
+                   players = players.OrderByDescending(p => p.Lastname);
+                    break;
+                case "Date":
+                    players = players.OrderBy(p => p.DOB);
+                    break;
+                case "date_desc":
+                    players = players.OrderByDescending(p => p.DOB);
+                    break;
+                default:
+                    players = players.OrderBy(p => p.Lastname);
+                    break;
+            }
+            return View(await players.AsNoTracking().ToListAsync());
+        }
+
+
+        // GET: Players
+        public async Task<IActionResult>Players(string searchTerm)
         {
             var players = from p in _context.Player
                            select p;
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-               players = players.Where(p => p.Firstname.Contains(searchTerm));
+               players = players.Where(p => p.Firstname.Contains(searchTerm) || p.Lastname.Contains(searchTerm));
+               
             }
             return View(await players.ToListAsync());
         }

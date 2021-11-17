@@ -13,7 +13,6 @@
  <form asp-controller="Managers" asp-action="Index">
  <p>
     Manager <input type="text" name="searchTerm" />
-    @*<input type="submit" value="Search"/>*@
     <button type="submit" class="btn btn-primary">Search</button>
 </p>
  </form>
@@ -22,13 +21,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.LastName)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DOB)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.DOB)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Experience)

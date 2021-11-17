@@ -11,34 +11,37 @@
         <a asp-action="Create">Create New</a>
     </p>
 
-    <form asp-controller="Players" asp-action="Index"> 
-    <p>
-        Player <input type="text" name="searchTerm" />
-        @*<input type="submit" value="Search"/>*@
-        <button type="submit" class="btn btn-primary">Search</button>
-    </p>
+    <form asp-controller="Players" asp-action="Index">
+        <p>
+            Player <input type="text" name="searchTerm" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </p>
     </form>
+    
+            
+           
+
 
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Lastname)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Lastname)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Firstname)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Firstname)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DOB)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.DOB)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Position)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Position)</a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Contact)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Team)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Team)</a>
                 </th>
                 <th></th>
             </tr>

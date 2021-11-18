@@ -19,15 +19,30 @@ namespace NZrugbyDatabase.Controllers
             _context = context;
         }
 
+
         // GET: Managers collums
-        public async Task<IActionResult> Index(string sortOrder, string searchTerm)
+        public async Task<IActionResult> Index(string sortOrder, string searchTerm, string currentFilter, int? pageNumber)
         {
             // this is just saying thatname and DOB will be put into order when you click on it
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date" + "";
-         
+
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "First Name" : "";
+            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date";
+
+
+            if (searchTerm != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchTerm = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchTerm;
+
             var managers = from m in _context.Manager
-                           select m;
+                          select m;
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -49,9 +64,10 @@ namespace NZrugbyDatabase.Controllers
                     managers = managers.OrderBy(m => m.LastName);
                     break;
             }
-            return View(await managers.AsNoTracking().ToListAsync());           
-        }
-              
+
+            int pageSize = 2;
+            return View(await PaginatedList<Manager>.CreateAsync(managers.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }              
 
         // GET: Managers/Details/5
         public async Task<IActionResult> Details(int? id)

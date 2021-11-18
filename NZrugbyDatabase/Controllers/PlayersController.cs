@@ -65,7 +65,7 @@ namespace NZrugbyDatabase.Controllers
             }
 
             int pageSize = 5;
-            return View(await PaginatedList< Player >.CreateAsync(players.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Player>.CreateAsync(players.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
                
 

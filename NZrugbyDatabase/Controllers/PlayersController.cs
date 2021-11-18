@@ -20,12 +20,26 @@ namespace NZrugbyDatabase.Controllers
         }
 
         // GET: Players
-        public async Task<IActionResult> Index(string sortOrder, string searchTerm)
+        public async Task<IActionResult> Index(string sortOrder, string searchTerm, string currentFilter, int? pageNumber)
         {
             // this is just saying thatname and DOB will be put into order when you click on it
+
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "First Name" : "";
-            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date";          
-            
+            ViewData["DateSortParm"] = sortOrder == "DOB" ? "date_desc" : "Date";
+                       
+
+            if (searchTerm != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchTerm = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchTerm;
+
             var players = from p in _context.Player
                           select p;
 
@@ -49,8 +63,9 @@ namespace NZrugbyDatabase.Controllers
                     players = players.OrderBy(p => p.Lastname);
                     break;
             }
-            
-            return View(await players.AsNoTracking().ToListAsync());
+
+            int pageSize = 5;
+            return View(await PaginatedList< Player >.CreateAsync(players.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
                
 

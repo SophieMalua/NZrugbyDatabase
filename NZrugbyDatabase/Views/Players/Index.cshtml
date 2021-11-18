@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NZrugbyDatabase.Models.Player>
+﻿@model PaginatedList<NZrugbyDatabase.Models.Player>
 
 @{
     ViewData["Title"] = "Players";
@@ -9,7 +9,7 @@
 
 
     <p>
-     
+
         <a asp-action="Create">Create New</a>
     </p>
 
@@ -17,7 +17,7 @@
     <form asp-controller="Players" asp-action="Index">
         <p>
             @* this means that its a search box and btn mean the colour of the search button *@
-            Player <input type="text" name="searchTerm" />
+            Player <input type="text" name="searchTerm" value="@ViewData["CurrentFilter"]"  />
             <button type="submit" class="btn btn-primary">Search</button>
         </p>
     </form>
@@ -27,22 +27,22 @@
         <thead>
             <tr>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Lastname)</a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Firstname)
+                    First Name
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.DOB)</a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">DOB</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Position)
+                    Position
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Contact)
+                    Contact
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Team)
+                    Team
                 </th>
                 <th></th>
             </tr>
@@ -78,4 +78,24 @@
             }
         </tbody>
     </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-primary @nextDisabled">
+        Next
+    </a>
 </div>
